@@ -1,7 +1,9 @@
 
 @extends('layout.master') 
 @section('content')
-<div class="container">
+<br>
+</br>
+<div class="container">]
   <h2 class="titulo">Tabela de Cadastros:</h2>      
   <table class="table">
     <thead>

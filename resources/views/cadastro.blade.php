@@ -33,7 +33,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="verificacao_email">E-mail:</label>
+                            <label for="verificacao_email">Confirme e-mail:</label>
                             <input id="verificacao_email" type="email" class="form-control @error('verificacao_email') is-invalid @enderror" name="verificacao_email" value="{{ old('verificacao_email') }}" required>
 
                             @error('email')
@@ -107,6 +107,8 @@
 @endsection
 @section('script')
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- Modelo pronto de mensagem de alerta, se foi enviado ou não  -->       
+
 <script>
     $(document).ready(function() {
         $('#formCadastro').submit(function(e){
@@ -122,12 +124,30 @@
                 type: 'POST',
                 data: formData,
                 success: function(response){
-                    // Lidar com a resposta bem-sucedida aqui
-                    console.log('Resposta do servidor:', response);
-                },
+                    // Lidar com a resposta bem-sucedida aqui, mostra que foi casdastrado 
+                    Swal.fire({
+                        icon: "success",
+                        title: "Dados enviados com Sucesso!",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                    $('#name').val(""); //Depois que o formulário for enviado, ele limpara os campos 
+                    $('#email').val(""); //Depois que o formulário for enviado, ele limpara os campos
+                    $('#verificacao_email').val("");
+                    $('#telefone').val("");
+                    $('#data_nascimento').val("");
+                    $('#cpf').val("");
+                    $('#password').val("");
+
+                }
                 error: function(xhr, status, error){
-                    // Lidar com erros aqui
-                    console.error('Erro na chamada AJAX:', error);
+                    // Lidar com erros aqui, mostra que não foi cadastrado
+                    Swal.fire({
+                        icon: "error",
+                        title: "Dados não enviados!",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
                 }
             });
         });
