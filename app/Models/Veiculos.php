@@ -9,7 +9,8 @@ class Veiculos extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
+    protected $fillable = [ //Criando o nome das colunas no banco de dados
+        'usuario',
         'placa',
         'modelo',
         'cor',
