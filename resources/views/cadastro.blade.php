@@ -106,8 +106,8 @@
 </div>
 @endsection
 @section('script')
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script><!--Link da biblioteca jQuery que manipula animações e interações com o servidor utilizando AJAX -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script> <!--Link da biblioteca jQuery Mask, Essa biblioteca é utilizada para facilitar a formatação de campos -->
 <script>
     $(document).ready(function() {
         $('#formCadastro').submit(function(e){
@@ -116,12 +116,12 @@
             // Serialize o formulário para enviar os dados
             var formData = $(this).serialize();
 
-            $.ajax({
-                url: '{{ route("pessoas") }}',
-                type: 'POST',
-                data: formData,
-                success: function(response){
-                    console.log('Sucesso');
+            $.ajax({//AJAX envia e recebe dados do formulário sem precisar recarregar a página inteira
+                url: '{{ route("pessoas") }}',//Está enviando a URL para a rota pessoas
+                type: 'POST',//Define o metodo como post(enviar)
+                data: formData, 
+                success: function(response){//Define uma função, se a requisição dentro do ajax for bem sucedida aparece a mensagem de sucesso
+                    console.log('Sucesso'); //Mostra a mensagem de sucesso
                     Swal.fire({
                     title: "Sucesso",
                     text: "Usuário cadastrado com sucesso",
@@ -131,19 +131,19 @@
                     cancelButtonColor: "#d33",
                     confirmButtonText: "Ok"
                     }).then((result) => {
-                        if (result.isConfirmed) {
-                            $("#name").val("");
-                            $("#email").val("");
+                        if (result.isConfirmed) { //Após o envio do formulário,se o resultado for verdadeiro ele limpará os campos.
+                            $("#name").val("");//Limpa o campo nome
+                            $("#email").val("");//Limpa o campo email
                             $("#verificacao_email").val("");
                             $("#telefone").val("");
                             $("#data_nascimento").val("");
                             $("#cpf").val("");
                             $("#password").val("");
-                            window.location.href = "{{ url()->previous() }}";
+                            window.location.href = "{{ url()->previous() }}";//Logo após redireciona para a rota previous
                         }
                     });
                 },
-                error: function(xhr, status, error){
+                error: function(xhr, status, error){ //Define uma função, se a requisição dentro do ajax for mal sucedida aparece a mensagem de Erro
                     console.error('Erro');
                     Swal.fire({
                         icon: "error",
@@ -155,8 +155,8 @@
                 }
             });
         });
-        $('#telefone').mask('(00) 00000-0000');
-        $('#cpf').mask('000.000.000-00', {reverse: true});
+        $('#telefone').mask('(00) 00000-0000'); //Coloca um mask(mascara)para o telefone,formata o número de telefone com os parenteses e hífen.
+        $('#cpf').mask('000.000.000-00', {reverse: true});//Coloca um mask(mascara)para o cpf,formata com pontos e hífen.
     });
 </script>
 @endsection
